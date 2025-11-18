@@ -1,0 +1,92 @@
+<section class="section">
+  <div class="container">
+    <div class="breadcrumbs"><a href="/">Home</a> / <a href="/collections/all">Shop</a> / {{ product.title }}</div>
+    <article class="product">
+      <div class="product__gallery">
+        {% for media in product.media %}
+          {% case media.media_type %}
+          {% when 'image' %}
+            <img src="{{ media | image_url: width: 1200 }}" alt="{{ product.title }} image {{ forloop.index }}">
+          {% endcase %}
+        {% endfor %}
+      </div>
+      <div>
+        <h1 class="section__title">{{ product.title }}</h1>
+        <div class="price" style="margin-bottom:12px">
+          <strong>{{ product.price | money }}</strong>
+          {% if product.compare_at_price > product.price %}
+            <span class="compare-at">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+        </div>
+
+        <form method="post" action="/cart/add" id="product-form-{{ product.id }}">
+          {% unless product.has_only_default_variant %}
+            {% for option in product.options_with_values %}
+              <div style="margin-bottom:10px">
+                <div style="font-weight:600;margin-bottom:8px">{{ option.name }}</div>
+                <div class="variant-options" data-swatch-group>
+                  {% for value in option.values %}
+                    <button class="swatch" data-swatch type="button" data-option-index="{{ forloop.parentloop.index0 }}" data-value="{{ value }}">{{ value }}</button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          {% endunless %}
+
+          <label style="display:block;margin:12px 0 6px">Engraving (optional)</label>
+          <input class="input" type="text" name="properties[Engraving]" maxlength="30" placeholder="e.g., 08.10.2025 ❤">
+
+          <div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+            <button class="btn" type="submit">Add to cart</button>
+            <button class="btn btn--secondary" type="button" data-size-guide>Ring size guide</button>
+          </div>
+
+          <script>
+            (function(){
+              const formId = 'product-form-{{ product.id }}';
+              const form = document.getElementById(formId);
+              if(!form) return;
+              const variantMap = {{ product.variants | json }};
+              let selected = {};
+              form.addEventListener('click',function(e){
+                const btn=e.target.closest('[data-swatch]');
+                if(!btn) return;
+                const idx=btn.getAttribute('data-option-index');
+                const val=btn.getAttribute('data-value');
+                selected[idx]=val;
+                const match = variantMap.find(v => {
+                  if(!v.available) return false;
+                  const opts=[v.option1,v.option2,v.option3].filter(Boolean);
+                  return Object.entries(selected).every(([i,sv])=>opts[i]==sv);
+                });
+                if(match){
+                  let hidden = form.querySelector('input[name="id"]');
+                  if(!hidden){
+                    hidden = document.createElement('input');
+                    hidden.type='hidden'; hidden.name='id'; form.appendChild(hidden);
+                  }
+                  hidden.value = match.id;
+                }
+              });
+            })();
+          </script>
+        </form>
+
+        <div style="margin-top:18px">
+          <details open>
+            <summary style="font-weight:600">Materials & Care</summary>
+            <p style="color:var(--color-muted)">Crafted from premium materials. Avoid chemicals, store separately, and clean with a soft cloth.</p>
+          </details>
+          <details>
+            <summary style="font-weight:600">Shipping & Returns</summary>
+            <p style="color:var(--color-muted)">Fast shipping across South Africa. Easy 14-day returns.</p>
+          </details>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  {% schema %}
+  {"name":"Main product"}
+  {% endschema %}
+</section>

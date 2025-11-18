@@ -1,0 +1,12 @@
+<form id="SortBy" method="get">
+  <label for="sort-by" class="visually-hidden">Sort by</label>
+  <select id="sort-by" name="sort_by" onchange="this.form.submit()">
+    {% for option in collection.sort_options %}
+      <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+    {% endfor %}
+  </select>
+</form>
+<style>
+#SortBy select{padding:10px 12px;border:1px solid var(--color-border);border-radius:10px;background:#fff}
+.visually-hidden{position:absolute!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;width:1px!important;height:1px!important;overflow:hidden!important;white-space:nowrap!important}
+</style>

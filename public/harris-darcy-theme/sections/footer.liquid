@@ -1,0 +1,39 @@
+<footer class="footer">
+  <div class="container">
+    <div class="grid grid--4">
+      <div>
+        <h4>{{ shop.name }}</h4>
+        <p>{{ settings.footer_tagline | default: 'Modern jewelry, crafted for everyday luxury.' }}</p>
+        {% form 'customer' %}
+          <input class="input" type="email" name="contact[email]" placeholder="Your email" required>
+          <button class="btn" type="submit">Subscribe</button>
+        {% endform %}
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          {% for link in linklists.footer-menu.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="/pages/shipping">Shipping & Returns</a></li>
+          <li><a href="/pages/care">Jewelry Care</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <div class="badges">
+          <span>Secure Checkout</span>
+          <span>Premium Materials</span>
+          <span>South Africa</span>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:24px">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+  </div>
+</footer>

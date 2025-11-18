@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Brand",
+    "settings": [
+      {"type": "text", "id": "logo_text", "label": "Logo text", "default": "Harris & Darcy"},
+      {"type": "text", "id": "footer_tagline", "label": "Footer tagline", "default": "Modern jewelry, crafted for everyday luxury."}
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {"type":"color","id":"color_bg","label":"Background","default":"#ffffff"},
+      {"type":"color","id":"color_text","label":"Text","default":"#0f1115"},
+      {"type":"color","id":"color_accent","label":"Accent","default":"#c7a17a"}
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {"type":"select","id":"font_family","label":"Base font","default":"Manrope","options":[
+        {"value":"Manrope","label":"Manrope"},
+        {"value":"Inter","label":"Inter"},
+        {"value":"Helvetica","label":"System Helvetica"}
+      ]}
+    ]
+  }
+]

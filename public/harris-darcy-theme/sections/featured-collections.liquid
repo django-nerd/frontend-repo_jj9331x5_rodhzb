@@ -1,0 +1,36 @@
+<section class="section">
+  <div class="container">
+    <h2 class="section__title">{{ section.settings.title | default: 'Featured Collections' }}</h2>
+    <div class="grid grid--3">
+      {% for block in section.blocks %}
+        <a class="card" href="{{ block.settings.link }}">
+          <div class="card__media">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title }}"/>
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?q=80&w=1200&auto=format&fit=crop" alt="Collection"/>
+            {% endif %}
+          </div>
+          <div class="card__body">
+            <strong>{{ block.settings.title | default: 'Collection' }}</strong>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Featured collections",
+    "settings": [{"type":"text","id":"title","label":"Title"}],
+    "blocks": [
+      {"type":"collection","name":"Collection","settings":[
+        {"type":"text","id":"title","label":"Title"},
+        {"type":"image_picker","id":"image","label":"Image"},
+        {"type":"url","id":"link","label":"Link"}
+      ]}
+    ],
+    "presets": [{"name":"Featured collections","blocks":[{"type":"collection"},{"type":"collection"},{"type":"collection"}]}]
+  }
+  {% endschema %}
+</section>

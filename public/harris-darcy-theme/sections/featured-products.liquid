@@ -1,0 +1,37 @@
+<section class="section">
+  <div class="container">
+    <h2 class="section__title">{{ section.settings.title | default: 'Bestsellers' }}</h2>
+    <div class="grid grid--4">
+      {% assign coll = section.settings.collection %}
+      {% for product in collections[coll].products limit: 8 %}
+        <a class="card" href="{{ product.url }}">
+          <div class="card__media">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}"/>
+            {% endif %}
+          </div>
+          <div class="card__body">
+            <div>{{ product.title }}</div>
+            <div class="price">
+              <span>{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="compare-at">{{ product.compare_at_price | money }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Featured products",
+    "settings": [
+      {"type":"text","id":"title","label":"Title"},
+      {"type":"collection","id":"collection","label":"Collection"}
+    ],
+    "presets":[{"name":"Featured products"}]
+  }
+  {% endschema %}
+</section>

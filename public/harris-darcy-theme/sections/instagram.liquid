@@ -1,0 +1,32 @@
+<section class="section">
+  <div class="container">
+    <h2 class="section__title">{{ section.settings.title | default: 'Follow us on Instagram' }}</h2>
+    <div class="grid grid--4">
+      {% for block in section.blocks %}
+        <a class="card" href="{{ block.settings.link }}" target="_blank" rel="noopener">
+          <div class="card__media">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Instagram"/>
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200&auto=format&fit=crop" alt="Insta"/>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Instagram grid",
+    "settings": [{"type":"text","id":"title","label":"Title"}],
+    "blocks": [
+      {"type":"image","name":"Image","settings":[
+        {"type":"image_picker","id":"image","label":"Image"},
+        {"type":"url","id":"link","label":"Link"}
+      ]}
+    ],
+    "presets":[{"name":"Instagram grid","blocks":[{"type":"image"},{"type":"image"},{"type":"image"},{"type":"image"}]}]
+  }
+  {% endschema %}
+</section>

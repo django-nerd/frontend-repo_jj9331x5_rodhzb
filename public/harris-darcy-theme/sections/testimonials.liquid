@@ -1,0 +1,29 @@
+<section class="section">
+  <div class="container">
+    <h2 class="section__title">{{ section.settings.title | default: 'Kind words from clients' }}</h2>
+    <div class="grid grid--3">
+      {% for block in section.blocks %}
+        <div class="card">
+          <div class="card__body">
+            <p style="color:var(--color-muted)">“{{ block.settings.quote }}”</p>
+            <p><strong>{{ block.settings.author }}</strong></p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+  {
+    "name": "Testimonials",
+    "settings": [{"type":"text","id":"title","label":"Title"}],
+    "blocks": [
+      {"type":"quote","name":"Quote","settings":[
+        {"type":"text","id":"quote","label":"Quote"},
+        {"type":"text","id":"author","label":"Author"}
+      ]}
+    ],
+    "presets":[{"name":"Testimonials","blocks":[{"type":"quote"},{"type":"quote"},{"type":"quote"}]}]
+  }
+  {% endschema %}
+</section>

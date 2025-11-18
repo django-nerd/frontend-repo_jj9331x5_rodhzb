@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "hero": {"type": "hero", "settings": {"heading": "Modern Fine Jewelry", "subheading": "Timeless pieces designed in South Africa — crafted to elevate the everyday."}},
+    "featured-collections": {"type": "featured-collections", "settings": {"title": "Featured Collections"}},
+    "featured-products": {"type": "featured-products", "settings": {"title": "Bestsellers"}},
+    "testimonials": {"type": "testimonials", "settings": {"title": "What our clients say"}},
+    "instagram": {"type": "instagram", "settings": {"title": "From our community"}}
+  },
+  "order": ["hero", "featured-collections", "featured-products", "testimonials", "instagram"]
+}

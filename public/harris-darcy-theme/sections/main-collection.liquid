@@ -1,0 +1,55 @@
+<section class="section">
+  <div class="container">
+    <div class="breadcrumbs">
+      <a href="/">Home</a> / {{ collection.title }}
+    </div>
+    <h1 class="section__title">{{ collection.title }}</h1>
+
+    <div class="filters">
+      {% if collection.filters.size > 0 %}
+        {% for filter in collection.filters %}
+          <details>
+            <summary>{{ filter.label }}</summary>
+            <div style="margin-top:8px">
+              {% for filter_value in filter.values %}
+                <label style="display:flex;gap:8px;align-items:center;margin:6px 0">
+                  <input type="checkbox" name="{{ filter.param_name }}" value="{{ filter_value.value }}" {% if filter_value.active %}checked{% endif %}>
+                  <span>{{ filter_value.label }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          </details>
+        {% endfor %}
+      {% endif %}
+      <div class="sort">
+        {% render 'sort-by' %}
+      </div>
+    </div>
+
+    <div class="grid grid--4" style="margin-top:22px">
+      {% for product in collection.products %}
+        <a class="card" href="{{ product.url }}">
+          <div class="card__media">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}"/>
+            {% endif %}
+          </div>
+          <div class="card__body">
+            <div>{{ product.title }}</div>
+            <div class="price">
+              <span>{{ product.price | money }}</span>
+            </div>
+            <form method="post" action="/cart/add">
+              <input type="hidden" name="id" value="{{ product.first_available_variant.id }}" />
+              <button class="btn" type="submit">Add to cart</button>
+            </form>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% schema %}
+  {"name":"Main collection"}
+  {% endschema %}
+</section>

@@ -1,0 +1,14 @@
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="logo">{{ settings.logo_text | default: shop.name }}</a>
+    <nav class="nav">
+      {% for link in linklists.main-menu.links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
+    </nav>
+    <div class="header__actions">
+      <a href="/search" aria-label="Search">Search</a>
+      <a href="/cart" aria-label="Cart">Cart</a>
+    </div>
+  </div>
+</header>
